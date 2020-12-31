@@ -19,14 +19,15 @@ namespace YoutubeApi.Video
         public static string Extract(string stringContainingId)
         {
             var match = VideoIdRegex.Match(stringContainingId);
-            var videoId = RegexUtils.ExtractFirstValidGroupMatch(match.Groups, 1);
-
-            if (String.Empty.Equals(videoId))
+            try
+            {
+                var videoIdGroup = RegexUtils.ExtractFirstValidGroupMatch(match.Groups, 1);
+                return videoIdGroup.Value;
+            }
+            catch (InvalidOperationException)
             {
                 throw new ExtractionException($"Can't extract videoId from {stringContainingId}");
             }
-
-            return videoId;
         }
     }
 }
