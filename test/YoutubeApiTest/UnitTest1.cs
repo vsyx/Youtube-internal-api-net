@@ -1,7 +1,13 @@
 using NUnit.Framework;
+using YoutubeApi.Video;
+using YoutubeApi;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace YoutubeApi
 {
+    [TestFixture]
     public class Tests
     {
         [SetUp]
@@ -10,7 +16,7 @@ namespace YoutubeApi
         }
 
         [Test]
-        public void Test1()
+        public async Task Test1()
         {
             Assert.Pass();
         }
