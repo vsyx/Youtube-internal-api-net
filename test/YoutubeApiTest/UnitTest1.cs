@@ -5,7 +5,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace YoutubeApi
+namespace YoutubeApiTest
 {
     [TestFixture]
     public class Tests
