@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{18080CB4-163
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubeApi", "src\YoutubeApi\YoutubeApi.csproj", "{58B546CF-8809-459E-A950-DDC095017C4F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8BDE40BC-CBAF-4A62-AD88-3630FB9195EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubeApiTest", "test\YoutubeApiTest\YoutubeApiTest.csproj", "{34E1474D-AECF-45D0-87D6-3942076C9CD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +36,21 @@ Global
 		{58B546CF-8809-459E-A950-DDC095017C4F}.Release|x64.Build.0 = Release|Any CPU
 		{58B546CF-8809-459E-A950-DDC095017C4F}.Release|x86.ActiveCfg = Release|Any CPU
 		{58B546CF-8809-459E-A950-DDC095017C4F}.Release|x86.Build.0 = Release|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Debug|x64.Build.0 = Debug|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Debug|x86.Build.0 = Debug|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Release|x64.ActiveCfg = Release|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Release|x64.Build.0 = Release|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Release|x86.ActiveCfg = Release|Any CPU
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{58B546CF-8809-459E-A950-DDC095017C4F} = {18080CB4-1637-48C6-999E-8E361EB9CB3C}
+		{34E1474D-AECF-45D0-87D6-3942076C9CD2} = {8BDE40BC-CBAF-4A62-AD88-3630FB9195EA}
 	EndGlobalSection
 EndGlobal
