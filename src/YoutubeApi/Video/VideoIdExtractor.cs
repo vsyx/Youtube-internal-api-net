@@ -22,7 +22,7 @@ namespace YoutubeApi.Video
             var match = VideoIdRegex.Value.Match(stringContainingId);
             var videoId = RegexUtils.ExtractFirstValidGroupMatch(match.Groups, 1);
 
-            if (videoId == String.Empty)
+            if (String.Empty.Equals(videoId))
             {
                 throw new ExtractionException($"Can't extract videoId from {stringContainingId}");
             }
