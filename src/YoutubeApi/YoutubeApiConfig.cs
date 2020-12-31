@@ -22,5 +22,15 @@ namespace YoutubeApi
                 { "Cookie", youtubeCookie }
             };
         }
+
+        internal HttpRequestMessage SetupMessage(HttpRequestMessage message)
+        {
+            foreach (var (key, value) in Headers)
+            {
+                message.Headers.Add(key, value);
+            }
+
+            return message;
+        }
     }
 }
