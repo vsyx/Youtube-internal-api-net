@@ -14,12 +14,11 @@ namespace YoutubeApi.Video
             $"^({VideoIdPattern})$" // just id
         };
 
-        private static readonly Lazy<Regex> VideoIdRegex = new Lazy<Regex>(() =>
-            new Regex(RegexUtils.CombinePatterns(VideoIdPatterns), RegexOptions.Compiled));
+        private static readonly Regex VideoIdRegex = new Regex(RegexUtils.CombinePatterns(VideoIdPatterns));
 
         public static string Extract(string stringContainingId)
         {
-            var match = VideoIdRegex.Value.Match(stringContainingId);
+            var match = VideoIdRegex.Match(stringContainingId);
             var videoId = RegexUtils.ExtractFirstValidGroupMatch(match.Groups, 1);
 
             if (String.Empty.Equals(videoId))
