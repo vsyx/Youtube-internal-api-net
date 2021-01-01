@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using YoutubeApi.Video.Models;
 
 namespace YoutubeApi.Video
 {
@@ -13,10 +14,11 @@ namespace YoutubeApi.Video
             this.YoutubeConfig = youtubeApiConfig;
         }
 
-        public async Task ExtractAsync(string stringContainingId)
+        public async Task<VideoConfig> ExtractAsync(string stringContainingId)
         {
             string videoId = VideoIdExtractor.Extract(stringContainingId);
-            string videoHtmlPage = await FetchVideoPage(GetVideoPageUrl(videoId));
+            string videoHtmlPage = await FetchVideoPage($"https://www.youtube.com/watch?v={videoId}");
+            return VideoDetailsConfigExtractor.Extract(videoHtmlPage);
         }
 
         private async Task<string> FetchVideoPage(string uri)
@@ -31,7 +33,5 @@ namespace YoutubeApi.Video
             using var response = await YoutubeConfig.Client.SendAsync(message);
             return await response.Content.ReadAsStringAsync();
         }
-
-        private string GetVideoPageUrl(string videoId) => $"https://www.youtube.com/watch?v={videoId}";
     }
 }
