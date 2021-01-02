@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace YotubeApi.Util
+namespace YoutubeApi.Util
 {
     public class AsyncLazy<T> : Lazy<Task<T>>
     {
