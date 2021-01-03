@@ -1,6 +1,8 @@
 using System;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
+using YoutubeApi.Exceptions;
 using YoutubeApi.Video.Models;
 
 namespace YoutubeApi.Video
@@ -8,20 +10,45 @@ namespace YoutubeApi.Video
     public class VideoDetailsExtractor
     {
         public YoutubeApiConfig YoutubeConfig { get; private set; }
+        public StreamingDataDecoder Decoder { get; private set; }
 
         public VideoDetailsExtractor(YoutubeApiConfig youtubeApiConfig) 
         {
             this.YoutubeConfig = youtubeApiConfig;
+            this.Decoder = new StreamingDataDecoder(youtubeApiConfig.Client);
         }
 
         public async Task<VideoConfig> ExtractAsync(string stringContainingId)
         {
             string videoId = VideoIdExtractor.Extract(stringContainingId);
-            string videoHtmlPage = await FetchVideoPage($"https://www.youtube.com/watch?v={videoId}");
-            return VideoDetailsConfigExtractor.Extract(videoHtmlPage);
+            string videoHtmlPage = await FetchWithUserCookies($"https://www.youtube.com/watch?v={videoId}");
+            string configJsonText = VideoDetailsConfigExtractor.Extract(videoHtmlPage);
+            string decodedConfigJsonText = await Decoder.Decode(videoHtmlPage, configJsonText);
+
+            return ParseVideoConfig(decodedConfigJsonText);
         }
 
-        private async Task<string> FetchVideoPage(string uri)
+        public VideoConfig ParseVideoConfig(string videoConfig)
+        {
+            using var jsonDocument = JsonDocument.Parse(videoConfig);
+            var root = jsonDocument.RootElement;
+
+            var videoDetails = root.GetProperty("videoDetails").ToString();
+            var streamingData = root.GetProperty("streamingData").ToString();
+
+            if (videoDetails == null || streamingData == null)
+            {
+                throw new ExtractionException();
+            }
+
+            return new VideoConfig()
+            {
+                VideoDetails = JsonSerializer.Deserialize<VideoDetails>(videoDetails),
+                StreamingData = JsonSerializer.Deserialize<StreamingData>(streamingData)
+            };
+        }
+
+        private async Task<string> FetchWithUserCookies(string uri)
         {
             using var message = new HttpRequestMessage()
             {
