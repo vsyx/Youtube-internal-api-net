@@ -4,13 +4,13 @@
 
 # Usage example
 ```csharp
-    var config = new YoutubeApiConfig(Client);
-    var extractor = new VideoConfigExtractor(config);
+var config = new YoutubeApiConfig(Client);
+var extractor = new VideoConfigExtractor(config);
 
-    // can be either the full/short url or just the videoId
-    var stringContainingVideoId = "https://www.youtube.com/watch?v=jNQXAC9IVRw" 
-    var result = await extractor.ExtractAsync(stringContainingVideoId);
-    Console.WriteLine(result?.VideoDetails.Title);
+// can be either the full/short url or just the videoId
+var stringContainingVideoId = "https://www.youtube.com/watch?v=jNQXAC9IVRw" 
+var result = await extractor.ExtractAsync(stringContainingVideoId);
+Console.WriteLine(result?.VideoDetails.Title);
 ```
 
 # Disclaimer
