@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 #nullable disable
-#nullable enable annotations
 namespace YoutubeApi.Video.Models
 {
-    public class Format {
+    public class Format : IFormat {
         [JsonPropertyName("itag")]
         public int Itag { get; set; } 
 
@@ -74,7 +73,7 @@ namespace YoutubeApi.Video.Models
         public string End { get; set; } 
     }
 
-    public class AdaptiveFormat {
+    public class AdaptiveFormat: IFormat {
         [JsonPropertyName("itag")]
         public int Itag { get; set; } 
 
@@ -133,7 +132,7 @@ namespace YoutubeApi.Video.Models
         public string AudioSampleRate { get; set; } 
 
         [JsonPropertyName("audioChannels")]
-        public int? AudioChannels { get; set; } 
+        public int AudioChannels { get; set; } 
 
         [JsonPropertyName("loudnessDb")]
         public double? LoudnessDb { get; set; } 
@@ -156,9 +155,9 @@ namespace YoutubeApi.Video.Models
         public List<AdaptiveFormat> AdaptiveFormats { get; set; } 
 
         [JsonPropertyName("dashManifestUrl")]
-        public string? DashManifestUrl { get; set; } 
+        public string DashManifestUrl { get; set; } 
 
         [JsonPropertyName("hlsManifestUrl")]
-        public string? HlsManifestUrl { get; set; } 
+        public string HlsManifestUrl { get; set; } 
     }
 }
