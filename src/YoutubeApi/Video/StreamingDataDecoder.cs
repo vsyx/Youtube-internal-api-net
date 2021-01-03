@@ -10,7 +10,7 @@ using System.Collections;
 
 using YoutubeApi.Exceptions;
 using YoutubeApi.Util;
-using YoutubeApi.Video.Models;
+using System.Collections.Concurrent;
 
 namespace YoutubeApi.Video
 {
@@ -18,11 +18,13 @@ namespace YoutubeApi.Video
     {
         public HttpClient Client { get; private set; }
         public SignatureDecoderExtractor SignatureDecoderExtractor { get; private set; }
+        public ConcurrentDictionary<string, Lazy<Task<SignatureDecoder>>> SignatureDecoderCache { get; private set; }
 
         public StreamingDataDecoder(HttpClient client)
         {
             Client = client;
             SignatureDecoderExtractor = new SignatureDecoderExtractor(Client);
+            SignatureDecoderCache = new ConcurrentDictionary<string, Lazy<Task<SignatureDecoder>>>();
         }
 
         public async Task<string> Decode(string videoHtmlPage, string configJsonText)
@@ -91,7 +93,13 @@ namespace YoutubeApi.Video
 
             if (cipheredFormats.Count != 0)
             {
-                var signatureDecoder = await SignatureDecoderExtractor.ExtractDecoder(ExtractBaseJsUrl(videoHtmlPage));
+                var baseJsUrl = ExtractBaseJsUrl(videoHtmlPage);
+
+                // TODO add exception handling
+                // wrapped within a Lazy to prevent multiple invocations
+                var signatureDecoderFunc = SignatureDecoderCache.GetOrAdd(baseJsUrl, new Lazy<Task<SignatureDecoder>>(() => SignatureDecoderExtractor.ExtractDecoder(baseJsUrl)));
+
+                var signatureDecoder = await signatureDecoderFunc.Value;
 
                 var uncipheredFormats = cipheredFormats.Select(format =>
                 {
