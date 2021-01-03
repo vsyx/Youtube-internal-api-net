@@ -7,12 +7,12 @@ using YoutubeApi.Video.Models;
 
 namespace YoutubeApi.Video
 {
-    public class VideoDetailsExtractor
+    public class VideoConfigExtractor
     {
         public YoutubeApiConfig YoutubeConfig { get; private set; }
         public StreamingDataDecoder Decoder { get; private set; }
 
-        public VideoDetailsExtractor(YoutubeApiConfig youtubeApiConfig) 
+        public VideoConfigExtractor(YoutubeApiConfig youtubeApiConfig) 
         {
             this.YoutubeConfig = youtubeApiConfig;
             this.Decoder = new StreamingDataDecoder(youtubeApiConfig.Client);
