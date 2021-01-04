@@ -60,7 +60,7 @@ namespace YoutubeApi.Video
             var decodedFormats = new List<Hashtable>();
             var cipheredFormats = new List<Hashtable>();
 
-            foreach (var format in formats)
+            Parallel.ForEach(formats, format =>
             {
                 if (format.ContainsKey("signatureCipher"))
                 {
@@ -86,10 +86,10 @@ namespace YoutubeApi.Video
                         )
                 {
                     decodedFormats.Add(format);
-                    continue;
+                    return;
                 }
                 cipheredFormats.Add(format);
-            }
+            });
 
             if (cipheredFormats.Count != 0)
             {
