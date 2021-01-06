@@ -1,6 +1,6 @@
 # Youtube-internal-api-net 
 
-**Inernal** YouTube api wrapper for downloading video metadata. This library web scrapes the data just like youtube-dl does.
+**Inernal** YouTube api wrapper (currently for only downloading video metadata). This library web scrapes the data just like youtube-dl does.
 
 # Usage example
 ```csharp
