@@ -3,16 +3,17 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using YoutubeApi.Exceptions;
+using YoutubeApi.Interfaces;
 using YoutubeApi.Video.Models;
 
 namespace YoutubeApi.Video
 {
     public class VideoConfigExtractor
     {
-        public YoutubeApiConfig YoutubeConfig { get; private set; }
+        public IYoutubeApiConfig YoutubeConfig { get; private set; }
         public StreamingDataDecoder Decoder { get; private set; }
 
-        public VideoConfigExtractor(YoutubeApiConfig youtubeApiConfig) 
+        public VideoConfigExtractor(IYoutubeApiConfig youtubeApiConfig) 
         {
             this.YoutubeConfig = youtubeApiConfig;
             this.Decoder = new StreamingDataDecoder(youtubeApiConfig.Client);
@@ -55,7 +56,7 @@ namespace YoutubeApi.Video
                 Method = HttpMethod.Get,
                 RequestUri = new Uri(uri)
             };
-            YoutubeConfig.SetupMessage(message);
+            YoutubeConfig.PrepareHttpRequestMessage?.Invoke(message);
 
             using var response = await YoutubeConfig.Client.SendAsync(message);
             return await response.Content.ReadAsStringAsync();
