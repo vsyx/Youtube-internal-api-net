@@ -11,19 +11,20 @@ using System.Collections;
 using YoutubeApi.Exceptions;
 using YoutubeApi.Util;
 using System.Collections.Concurrent;
+using YoutubeApi.Interfaces;
 
 namespace YoutubeApi.Video
 {
     public class StreamingDataDecoder
     {
-        public HttpClient Client { get; private set; }
-        public SignatureDecoderExtractor SignatureDecoderExtractor { get; private set; }
-        public ConcurrentDictionary<string, Lazy<Task<SignatureDecoder>>> SignatureDecoderCache { get; private set; }
+        private IYoutubeApiConfig YoutubeApiConfig { get; set; }
+        private SignatureDecoderExtractor SignatureDecoderExtractor { get; set; }
+        private ConcurrentDictionary<string, Lazy<Task<SignatureDecoder>>> SignatureDecoderCache { get; set; }
 
-        public StreamingDataDecoder(HttpClient client)
+        public StreamingDataDecoder(IYoutubeApiConfig youtubeApiConfig)
         {
-            Client = client;
-            SignatureDecoderExtractor = new SignatureDecoderExtractor(Client);
+            YoutubeApiConfig = youtubeApiConfig;
+            SignatureDecoderExtractor = new SignatureDecoderExtractor(youtubeApiConfig.Client);
             SignatureDecoderCache = new ConcurrentDictionary<string, Lazy<Task<SignatureDecoder>>>();
         }
 
